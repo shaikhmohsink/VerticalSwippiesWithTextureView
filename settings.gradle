@@ -1,1 +1,1 @@
-include ':app', ':googlemediaframework'
+include ':app', ':googlemediaframework', ':player'

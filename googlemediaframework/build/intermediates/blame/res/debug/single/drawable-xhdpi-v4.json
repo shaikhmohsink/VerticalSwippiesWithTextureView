@@ -12,12 +12,12 @@
         "source": "F:\\Backup\\Workspace\\AndroidWorkspace\\VerticalSwippiesWithTextureView\\googlemediaframework\\src\\main\\res\\drawable-xhdpi\\ic_action_full_screen.png"
     },
     {
-        "merged": "F:\\Backup\\Workspace\\AndroidWorkspace\\VerticalSwippiesWithTextureView\\googlemediaframework\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_action_overflow.png",
-        "source": "F:\\Backup\\Workspace\\AndroidWorkspace\\VerticalSwippiesWithTextureView\\googlemediaframework\\src\\main\\res\\drawable-xhdpi\\ic_action_overflow.png"
-    },
-    {
         "merged": "F:\\Backup\\Workspace\\AndroidWorkspace\\VerticalSwippiesWithTextureView\\googlemediaframework\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_action_pause.png",
         "source": "F:\\Backup\\Workspace\\AndroidWorkspace\\VerticalSwippiesWithTextureView\\googlemediaframework\\src\\main\\res\\drawable-xhdpi\\ic_action_pause.png"
+    },
+    {
+        "merged": "F:\\Backup\\Workspace\\AndroidWorkspace\\VerticalSwippiesWithTextureView\\googlemediaframework\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_action_overflow.png",
+        "source": "F:\\Backup\\Workspace\\AndroidWorkspace\\VerticalSwippiesWithTextureView\\googlemediaframework\\src\\main\\res\\drawable-xhdpi\\ic_action_overflow.png"
     },
     {
         "merged": "F:\\Backup\\Workspace\\AndroidWorkspace\\VerticalSwippiesWithTextureView\\googlemediaframework\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_action_return_from_full_screen.png",

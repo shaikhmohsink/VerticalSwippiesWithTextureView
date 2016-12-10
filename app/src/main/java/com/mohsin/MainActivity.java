@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if(!pauseVideoAndShowImageOnlyOnce) {
                     //try { ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).mediaPlayer.pause(); } catch(Exception e) {}
-                    try { ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).imaPlayer.pause(); } catch(Exception e) {}
+                    //try { ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).imaPlayer.pause(); } catch(Exception e) {}
+                    try { ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).videoTexturePresenter.pause(); } catch(Exception e) {}
                     pauseVideoAndShowImageOnlyOnce = true;
                 }
 
@@ -40,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
                     ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).currentlySelected = position;
                     AppController.currentlySelectedPopularCategoriesPage = position;
                     //try { ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).mediaPlayer.start(); } catch(Exception e) {}
-                    try { ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).imaPlayer.play(); } catch(Exception e) {}
+                    //try { ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).imaPlayer.play(); } catch(Exception e) {}
+                    try { ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).videoTexturePresenter.play(); } catch(Exception e) {}
                 }
             }
 

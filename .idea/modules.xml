@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/VerticalSwippiesWithTextureView.iml" filepath="$PROJECT_DIR$/VerticalSwippiesWithTextureView.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/googlemediaframework/googlemediaframework.iml" filepath="$PROJECT_DIR$/googlemediaframework/googlemediaframework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/player/player.iml" filepath="$PROJECT_DIR$/player/player.iml" />
     </modules>
   </component>
 </project>

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -24,6 +25,12 @@ import com.mohsin.adplayer.ImaPlayer;
 import com.mohsin.model.VideoListItem;
 
 import java.io.IOException;
+
+import butterknife.InjectView;
+import jp.satorufujiwara.player.VideoSource;
+import jp.satorufujiwara.player.VideoTexturePresenter;
+import jp.satorufujiwara.player.VideoTextureView;
+import jp.satorufujiwara.player.hls.HlsVideoSource;
 
 /**
  * Created by user on 30-07-2016.
@@ -54,6 +61,13 @@ public class PopularCategoriesFragment extends Fragment implements ImaPlayer.Pla
 
 
 
+    public VideoTexturePresenter videoTexturePresenter;
+    //@InjectView(R.id.videoTextureView)
+    public VideoTextureView videoTextureView;
+
+
+
+
 
 
 
@@ -75,6 +89,7 @@ public class PopularCategoriesFragment extends Fragment implements ImaPlayer.Pla
         view = inflater.inflate(R.layout.popular_categories_item, container, false);
         view.setBackgroundColor(Color.parseColor(getColorVaule()));
         busyCursor = (ProgressBar) view.findViewById(R.id.progressBar);
+        videoTextureView = (VideoTextureView) view.findViewById(R.id.videoTextureView);
         //videoView = (VideoView) view.findViewById(R.id.videoView);
         /*textureView = (TextureView) view.findViewById(R.id.textureView);
         textureView.setSurfaceTextureListener(this);*/
@@ -82,11 +97,40 @@ public class PopularCategoriesFragment extends Fragment implements ImaPlayer.Pla
 
 
         // This container will be the video player.
-        videoPlayerContainer = (FrameLayout) view.findViewById(R.id.video_frame);
-        startPlayingVideo();
+        /*videoPlayerContainer = (FrameLayout) view.findViewById(R.id.video_frame);
+        startPlayingVideo();*/
+
+
+
+
+        videoTexturePresenter = new VideoTexturePresenter(videoTextureView);
+        videoTexturePresenter.onCreate();
+        VideoSource source = HlsVideoSource
+                //.newBuilder(Uri.parse("hls playlist url."), "UserAgent")
+                .newBuilder(Uri.parse(videoToPlayURL), "UserAgent")
+                .bufferSegmentSize(64 * 1024)
+                .bufferSegmentCount(512)
+                .build();
+        videoTexturePresenter.setSource(source);
+        videoTexturePresenter.prepare();
+
+
+        /*videoTexturePresenter.play();
+        videoTexturePresenter.seekTo(0);
+        videoTexturePresenter.setMute(true);
+        videoTexturePresenter.pause();*/
+
 
         return view;
     }
+    @Override
+    public void onDestroyView() {
+        videoTexturePresenter.release();
+        videoTexturePresenter.onDestroy();
+        super.onDestroyView();
+    }
+
+
     /*@Override
     public void playbackEnded() {
         System.out.println("INSIDE public void playbackEnded() {");
