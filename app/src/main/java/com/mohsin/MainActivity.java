@@ -68,6 +68,32 @@ public class MainActivity extends AppCompatActivity {
 
             if(i == 0) {
                 popularCategoriesFragment.setColorVaule("#ffffff");
+                popularCategoriesFragment.videoToPlayURL = "https://k7q5a5e5.ssl.hwcdn.net/files/company/575729ad97f8152c41a96700/assets/videos/57bca0bf97f815217cd5784e/vod/57bca0bf97f815217cd5784e.m3u8";
+            } else if(i == 1) {
+                popularCategoriesFragment.setColorVaule("#ff0000");
+                popularCategoriesFragment.videoToPlayURL = "https://k7q5a5e5.ssl.hwcdn.net/files/company/575729ad97f8152c41a96700/assets/videos/57bca0be99f815d6387023ed/vod/57bca0be99f815d6387023ed.m3u8";
+            } else if(i == 2) {
+                popularCategoriesFragment.setColorVaule("#00ff00");
+                popularCategoriesFragment.videoToPlayURL = "https://k7q5a5e5.ssl.hwcdn.net/files/company/575729ad97f8152c41a96700/assets/videos/57bc9ffd99f815113a7023ed/vod/57bc9ffd99f815113a7023ed.m3u8";
+            } else if(i == 3) {
+                popularCategoriesFragment.setColorVaule("#0000ff");
+                popularCategoriesFragment.videoToPlayURL = "https://k7q5a5e5.ssl.hwcdn.net/files/company/575729ad97f8152c41a96700/assets/videos/57bc9ffd97f815437ad5784d/vod/57bc9ffd97f815437ad5784d.m3u8";
+            } else if(i == 4) {
+                popularCategoriesFragment.setColorVaule("#0f0f0f");
+                popularCategoriesFragment.videoToPlayURL = "https://k7q5a5e5.ssl.hwcdn.net/files/company/575729ad97f8152c41a96700/assets/videos/57bc9ffd97f815197bd5784d/vod/57bc9ffd97f815197bd5784d.m3u8";
+            } else if(i == 5) {
+                popularCategoriesFragment.setColorVaule("#ffffff");
+                popularCategoriesFragment.videoToPlayURL = "https://k7q5a5e5.ssl.hwcdn.net/files/company/575729ad97f8152c41a96700/assets/videos/57bc9ed199f8155f377023ed/vod/57bc9ed199f8155f377023ed.m3u8";
+            } else if(i == 6) {
+                popularCategoriesFragment.setColorVaule("#ff0000");
+                popularCategoriesFragment.videoToPlayURL = "https://k7q5a5e5.ssl.hwcdn.net/files/company/575729ad97f8152c41a96700/assets/videos/57bc9ed199f81517387023ed/vod/57bc9ed199f81517387023ed.m3u8";
+            } else {
+                popularCategoriesFragment.setColorVaule("#00ff00");
+                popularCategoriesFragment.videoToPlayURL = "https://k7q5a5e5.ssl.hwcdn.net/files/company/575729ad97f8152c41a96700/assets/videos/57bc9ed197f815f378d5784d/vod/57bc9ed197f815f378d5784d.m3u8";
+            }
+
+            /*if(i == 0) {
+                popularCategoriesFragment.setColorVaule("#ffffff");
                 popularCategoriesFragment.videoToPlayURL = "Video URL";
             } else if(i == 1) {
                 popularCategoriesFragment.setColorVaule("#ff0000");
@@ -90,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 popularCategoriesFragment.setColorVaule("#00ff00");
                 popularCategoriesFragment.videoToPlayURL = "Video URL";
-            }
+            }*/
             popularCategoriesFragmentAdapter.addFragment(popularCategoriesFragment);
         }
 
