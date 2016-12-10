@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +65,7 @@ public class ImaPlayer {
   /**
    * The activity that is displaying this video player.
    */
-  private Activity activity;
+  private Fragment activity;
 
     public PlaybackEnded playbackEnded;
 
@@ -222,10 +223,12 @@ public class ImaPlayer {
 
             if (playbackState == ExoPlayer.STATE_BUFFERING) {
                 System.out.println("ExoPlayer.STATE_BUFFERINGExoPlayer.STATE_BUFFERINGExoPlayer.STATE_BUFFERING");
+              playbackEnded.isBufferringStarted();
             }
 
             if (playbackState == ExoPlayer.STATE_READY) {
                 System.out.println("ExoPlayer.STATE_READYExoPlayer.STATE_READYExoPlayer.STATE_READY");
+              playbackEnded.playbackReady();
             }
         }
 
@@ -253,7 +256,7 @@ public class ImaPlayer {
 
       // Display a toast message indicating the error.
       // You should remove this line of code for your production app.
-      Toast.makeText(activity, adErrorEvent.getError().getMessage(), Toast.LENGTH_SHORT).show();
+      Toast.makeText(activity.getActivity(), adErrorEvent.getError().getMessage(), Toast.LENGTH_SHORT).show();
       resumeContent();
     }
 
@@ -394,7 +397,7 @@ public class ImaPlayer {
    * @param fullscreenCallback The callback that should be triggered when the player enters or
    *                           leaves fullscreen.
    */
-  public ImaPlayer(Activity activity,
+  public ImaPlayer(Fragment activity,
                    FrameLayout container,
                    Video video,
                    String videoTitle,
@@ -411,16 +414,16 @@ public class ImaPlayer {
 
     sdkSettings.setPlayerType(PLAYER_TYPE);
     sdkSettings.setPlayerVersion(PLAYER_VERSION);
-    adsLoader = ImaSdkFactory.getInstance().createAdsLoader(activity, sdkSettings);
+    adsLoader = ImaSdkFactory.getInstance().createAdsLoader(activity.getContext(), sdkSettings);
     adListener = new AdListener();
     adsLoader.addAdErrorListener(adListener);
     adsLoader.addAdsLoadedListener(adListener);
 
     callbacks = new ArrayList<VideoAdPlayer.VideoAdPlayerCallback>();
 
-    boolean autoplay = true;
+    boolean autoplay = false;
     boolean hidePlaybackControlLayer = true;
-    contentPlayer = new SimpleVideoPlayer(activity,
+    contentPlayer = new SimpleVideoPlayer(activity.getActivity(),
         container,
         video,
         videoTitle,
@@ -435,7 +438,7 @@ public class ImaPlayer {
     //contentPlayer.hide();
 
     // Create the ad adDisplayContainer UI which will be used by the IMA SDK to overlay ad controls.
-    adUiContainer = new FrameLayout(activity);
+    adUiContainer = new FrameLayout(activity.getContext());
     container.addView(adUiContainer);
     adUiContainer.setLayoutParams(Util.getLayoutParamsBasedOnParent(
         adUiContainer,
@@ -456,7 +459,7 @@ public class ImaPlayer {
    * @param sdkSettings The settings that should be used to configure the IMA SDK.
    * @param adTagUrl The URL containing the VAST document of the ad.
    */
-  public ImaPlayer(Activity activity,
+  public ImaPlayer(Fragment activity,
                    FrameLayout container,
                    Video video,
                    String videoTitle,
@@ -472,7 +475,7 @@ public class ImaPlayer {
    * @param videoTitle The title of the video (displayed on the left of the top chrome).
    * @param adTagUrl The URL containing the VAST document of the ad.
    */
-  public ImaPlayer(Activity activity,
+  public ImaPlayer(Fragment activity,
                    FrameLayout container,
                    Video video,
                    String videoTitle,
@@ -491,7 +494,7 @@ public class ImaPlayer {
    * @param video The video that should be played.
    * @param videoTitle The title of the video (displayed on the left of the top chrome).
    */
-  public ImaPlayer(Activity activity,
+  public ImaPlayer(Fragment activity,
                    FrameLayout container,
                    Video video,
                    String videoTitle) {
@@ -508,7 +511,7 @@ public class ImaPlayer {
    * @param container The {@link FrameLayout} which will contain the video player.
    * @param video The video that should be played.
    */
-  public ImaPlayer(Activity activity,
+  public ImaPlayer(Fragment activity,
                    FrameLayout container,
                    Video video) {
     this(activity,
@@ -640,7 +643,7 @@ public class ImaPlayer {
     destroyAdPlayer();
 
     // Add the ad frame layout to the adDisplayContainer that contains all the content player.
-    adPlayerContainer = new FrameLayout(activity);
+    adPlayerContainer = new FrameLayout(activity.getContext());
     container.addView(adPlayerContainer);
     adPlayerContainer.setLayoutParams(Util.getLayoutParamsBasedOnParent(
         adPlayerContainer,
@@ -654,7 +657,7 @@ public class ImaPlayer {
 
 
     Video adVideo = new Video(adTagUrl.toString(), Video.VideoType.MP4);
-    adPlayer = new SimpleVideoPlayer(activity,
+    adPlayer = new SimpleVideoPlayer(activity.getActivity(),
         adPlayerContainer,
         adVideo,
         "",
@@ -768,5 +771,7 @@ public class ImaPlayer {
 
     public interface PlaybackEnded {
         void playbackEnded();
+        void playbackReady();
+        void isBufferringStarted();
     }
 }

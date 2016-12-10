@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.mohsin.adapter.PopularCategoriesFragmentAdapter;
+import com.mohsin.adplayer.ImaPlayer;
 import com.mohsin.components.VerticalViewPager;
 import com.mohsin.components.transformer.DepthPageTransformer;
 import com.mohsin.fragment.PopularCategoriesFragment;
@@ -29,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if(!pauseVideoAndShowImageOnlyOnce) {
-                    try { ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).mediaPlayer.pause(); } catch(Exception e) {}
+                    //try { ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).mediaPlayer.pause(); } catch(Exception e) {}
+                    try { ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).imaPlayer.pause(); } catch(Exception e) {}
                     pauseVideoAndShowImageOnlyOnce = true;
                 }
 
@@ -37,17 +39,19 @@ public class MainActivity extends AppCompatActivity {
                     pauseVideoAndShowImageOnlyOnce = false;
                     ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).currentlySelected = position;
                     AppController.currentlySelectedPopularCategoriesPage = position;
-                    try { ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).mediaPlayer.start(); } catch(Exception e) {}
+                    //try { ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).mediaPlayer.start(); } catch(Exception e) {}
+                    try { ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).imaPlayer.play(); } catch(Exception e) {}
                 }
             }
 
             @Override
             public void onPageSelected(int position) {
                 currentlySelectedPopularCategoriesPage = position;
-                System.out.println("onPageSelected position:"+position);
+                /*System.out.println("onPageSelected position:"+position);
                 ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).currentlySelected = position;
                 AppController.currentlySelectedPopularCategoriesPage = position;
-                try { ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).mediaPlayer.start(); } catch(Exception e) {}
+                //try { ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).mediaPlayer.start(); } catch(Exception e) {}
+                try { ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).imaPlayer.play(); } catch(Exception e) {}*/
             }
 
             @Override
@@ -126,5 +130,6 @@ public class MainActivity extends AppCompatActivity {
 
         AppController.currentlySelectedPopularCategoriesPage = 0;
         //try { ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).mediaPlayer.start(); } catch(Exception e) {}
+        //try { ((PopularCategoriesFragment) popularCategoriesFragmentAdapter.getItem(currentlySelectedPopularCategoriesPage)).imaPlayer.play(); } catch(Exception e) {}
     }
 }

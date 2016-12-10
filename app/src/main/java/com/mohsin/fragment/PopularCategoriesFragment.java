@@ -12,16 +12,23 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.VideoView;
 
+import com.google.android.libraries.mediaframework.exoplayerextensions.Video;
+import com.google.android.libraries.mediaframework.layeredvideo.PlaybackControlLayer;
+import com.mohsin.AppController;
 import com.mohsin.R;
+import com.mohsin.adplayer.ImaPlayer;
+import com.mohsin.model.VideoListItem;
 
 import java.io.IOException;
 
 /**
  * Created by user on 30-07-2016.
  */
-public class PopularCategoriesFragment extends Fragment implements TextureView.SurfaceTextureListener {
+public class PopularCategoriesFragment extends Fragment implements ImaPlayer.PlaybackEnded {
     public PopularCategoriesFragment() {
         // Required empty public constructor
     }
@@ -42,6 +49,24 @@ public class PopularCategoriesFragment extends Fragment implements TextureView.S
     public int currentlySelected = 0;
     public String videoToPlayURL = "";
 
+    public ProgressBar busyCursor;
+
+
+
+
+
+
+
+    /**
+     * The player which will be used to play the content videos and the ads.
+     */
+    public ImaPlayer imaPlayer;
+
+    /**
+     * The {@link android.widget.FrameLayout} that will contain the video player.
+     */
+    private FrameLayout videoPlayerContainer;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,12 +74,70 @@ public class PopularCategoriesFragment extends Fragment implements TextureView.S
         //return inflater.inflate(R.layout.fragment_intro, container, false);
         view = inflater.inflate(R.layout.popular_categories_item, container, false);
         view.setBackgroundColor(Color.parseColor(getColorVaule()));
+        busyCursor = (ProgressBar) view.findViewById(R.id.progressBar);
         //videoView = (VideoView) view.findViewById(R.id.videoView);
-        textureView = (TextureView) view.findViewById(R.id.textureView);
-        textureView.setSurfaceTextureListener(this);
+        /*textureView = (TextureView) view.findViewById(R.id.textureView);
+        textureView.setSurfaceTextureListener(this);*/
+
+
+
+        // This container will be the video player.
+        videoPlayerContainer = (FrameLayout) view.findViewById(R.id.video_frame);
+        startPlayingVideo();
 
         return view;
     }
+    /*@Override
+    public void playbackEnded() {
+        System.out.println("INSIDE public void playbackEnded() {");
+        startPlayingVideo();
+    }*/
+
+    public void startPlayingVideo() {
+        if (imaPlayer != null) {
+            imaPlayer.release();
+        }
+
+        // If there was previously a video player in the container, remove it.
+        videoPlayerContainer.removeAllViews();
+
+        String adTagUrl = "";
+        //String adTagUrl = videoListItem.adUrl;
+        //String adTagUrl = "https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/ad_rule_samples&ciu_szs=300x250&ad_rule=1&impl=s&gdfp_req=1&env=vp&output=vmap&unviewed_position_start=1&cust_params=deployment%3Ddevsite%26sample_ar%3Dpremidpostpodbumper&cmsid=496&vid=short_onecue&correlator=";
+        //String adTagUrl = "http://shadow01.yumenetworks.com/dynamic_preroll_playlist.vast2xml?domain=1552hCkaKYjg";
+        String videoTitle = "Random Video Title";
+        /*VideoListItem videoListItem = new VideoListItem("Random Video Title",
+                new Video("https://k7q5a5e5.ssl.hwcdn.net/files/company/575729ad97f8152c41a96700/assets/videos/576047c797f8157108beb7c3/vod/576047c797f8157108beb7c3.m3u8", Video.VideoType.HLS),
+                adTagUrl);*/
+        VideoListItem videoListItem = new VideoListItem("Random Video Title",
+                new Video(videoToPlayURL, Video.VideoType.HLS),
+                adTagUrl);
+        imaPlayer = new ImaPlayer(this,
+                videoPlayerContainer,
+                videoListItem.video,
+                videoTitle,
+                adTagUrl);
+        //imaPlayer.play();
+    }
+    @Override
+    public void playbackEnded() {
+        System.out.println("INSIDE public void playbackEnded() {");
+        try { startPlayingVideo(); } catch(Exception e) {}
+        busyCursor.setVisibility(View.VISIBLE);
+    }
+    @Override
+    public void playbackReady() {
+        busyCursor.setVisibility(View.GONE);
+        if(AppController.currentlySelectedPopularCategoriesPage == indexOfThis)
+            imaPlayer.play();
+    }
+    @Override
+    public void isBufferringStarted() {
+        busyCursor.setVisibility(View.VISIBLE);
+    }
+
+
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -73,7 +156,7 @@ public class PopularCategoriesFragment extends Fragment implements TextureView.S
         this.colorVaule = colorVaule;
     }
 
-    @Override
+    /*@Override
     public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
         Surface s = new Surface(surfaceTexture);
 
@@ -108,13 +191,13 @@ public class PopularCategoriesFragment extends Fragment implements TextureView.S
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
-                    /*try {
+                    *//*try {
                         mediaPlayer.seekTo(100);
                         if (currentlySelected == indexOfThis)
                             mediaPlayer.start();
                     } catch(Exception e) {
                         e.printStackTrace();
-                    }*/
+                    }*//*
                 }
             });
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -122,19 +205,19 @@ public class PopularCategoriesFragment extends Fragment implements TextureView.S
                 public void onPrepared(MediaPlayer mediaPlayer) {
                     try {
                         System.out.println("onPreparedonPreparedonPrepared");
-                        /*mediaPlayer.seekTo(100);
-                        mediaPlayer.pause();*/
+                        *//*mediaPlayer.seekTo(100);
+                        mediaPlayer.pause();*//*
 
                         if (currentlySelected == indexOfThis)
-                            mediaPlayer.start();/*
+                            mediaPlayer.start();*//*
                         else
-                            mediaPlayer.pause();*/
+                            mediaPlayer.pause();*//*
                     } catch(Exception e) {
                         e.printStackTrace();
                     }
                 }
             });
-            /*mediaPlayer.setOnVideoSizeChangedListener(this);*/
+            *//*mediaPlayer.setOnVideoSizeChangedListener(this);*//*
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             //mediaPlayer.prepareAsync();
             //mediaPlayer.start();
@@ -166,5 +249,5 @@ public class PopularCategoriesFragment extends Fragment implements TextureView.S
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
 
-    }
+    }*/
 }
